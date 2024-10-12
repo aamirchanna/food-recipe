@@ -47,7 +47,8 @@ function App() {
         <section className="flex items-center justify-between mb-16">
           <div className="w-1/2">
             <img 
-              src="/placeholder.svg?height=400&width=400" 
+            src="https://s1.1zoom.me/big0/588/The_second_dishes_Shrimp_Tomatoes_White_background_517162_1280x853.jpg"
+
               alt="Share your recipes" 
               width={400} 
               height={400} 
