@@ -1,5 +1,4 @@
-import React from 'react';
-import recipeImage from '../images/recipe.jpeg'; // Update the path to your image
+import recipeImage from '../assets/recipe.jpeg'; // Update the path to your image
 
 const RecipeShare = () => {
   return (

@@ -1,27 +1,10 @@
+import { Link } from "react-router-dom"
+import Cards from "./Cards"
 
-import { BrowserRouter , Routes ,Route } from 'react-router-dom'
-
-// import Cards from './components/Cards'
-// import Footer from './components/Footer'
-// import Header from './components/Header'
-import Home from './pages/Home'
-import About from "./pages/About"
-import ShareRecipe from './pages/ShareRecipe'
-import Blog from './pages/Blog'
-import Contact from './pages/Contact'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Recipe from './pages/Recipe'
-// import HeroSection from './components/HeroSection' 
-// import RecipeShare from './components/RecipeShare'
-function App() {
-
+const Main = () => {
   return (
-   <div>
-    {/* <Header/> */}
-    {/* <HeroSection/> */}
-    {/* <RecipeShare/> */}
-    {/* <main className="container mx-auto px-6 py-8">
+    <div>
+      <main className="container mx-auto px-6 py-8">
         <section className="flex items-center justify-between mb-16">
           <div className="w-1/2">
             <h2 className="text-5xl font-bold mb-4">Your Daily Dish</h2>
@@ -80,30 +63,13 @@ function App() {
         <section>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-3xl font-bold">Trending Recipe</h2>
-            <a href="#" className="text-red-500 hover:text-red-600">View more</a>
+            <Link to="./Recipe" className="text-red-500 hover:text-red-600">View more</Link>
           </div>
           <Cards/>
         </section>
-      </main> */}
-
-      
-      <BrowserRouter>
-      <Header/>
-      <Routes>
-       <Route path='/' element={<Home/>}></Route>
-       <Route path='/about' element={<About/>}></Route>
-       <Route path='/recipe' element={<Recipe/>}></Route>
-      <Route path='/sharerecipe' element={<ShareRecipe/>}></Route>
-      <Route path='/blog' element={<Blog/>}></Route>
-      <Route path='/contact' element={<Contact/>}></Route>
-  
-      </Routes>
-      <Footer/>
-     </BrowserRouter>
-{/* <Footer/> */}
-   </div>
+      </main>
+    </div>
   )
 }
 
-
-export default App;
+export default Main

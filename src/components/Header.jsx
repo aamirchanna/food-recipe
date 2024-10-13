@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 const Header = () => {
   return (
@@ -9,11 +10,11 @@ const Header = () => {
       <span className="ml-3 text-xl">Perfect Recipe</span>
     </a>
     <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <a className="mr-5 hover:text-gray-900">Home</a>
-      <a className="mr-5 hover:text-gray-900">Recipe</a>
-      <a className="mr-5 hover:text-gray-900">Add Recipe</a>
-      <a className="mr-5 hover:text-gray-900">Blog</a>
-      <a className="mr-5 hover:text-gray-900">About Us</a>
+      <Link  to={'/'} className="mr-5 hover:text-gray-900">Home</Link>
+      <Link  to={'recipe'} className="mr-5 hover:text-gray-900">Recipe</Link>
+      <Link  to={"sharerecipe"} className="mr-5 hover:text-gray-900">Add Recipe</Link>
+      <Link  to={"blog"} className="mr-5 hover:text-gray-900">Blog</Link>
+      <Link  to={"about"} className="mr-5 hover:text-gray-900">About Us</Link>
     </nav>
     <button className="px-6 py-3 text-white bg-gray-300 rounded-lg m-1 hover:bg-gray-400">Login</button>
     <button className="px-6 py-3 text-white bg-red-500 rounded-lg m-1 hover:bg-red-600">Sign Up</button>
