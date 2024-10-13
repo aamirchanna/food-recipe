@@ -1,15 +1,18 @@
 
 import './App.css'
-import Cards from './components/Cards'
+// import Cards from './components/Cards'
 import Footer from './components/Footer'
 import Header from './components/Header'
-
+import HeroSection from './components/HeroSection'
+import RecipeShare from './components/RecipeShare'
 function App() {
 
   return (
    <div>
     <Header/>
-    <main className="container mx-auto px-6 py-8">
+    <HeroSection/>
+    <RecipeShare/>
+    {/* <main className="container mx-auto px-6 py-8">
         <section className="flex items-center justify-between mb-16">
           <div className="w-1/2">
             <h2 className="text-5xl font-bold mb-4">Your Daily Dish</h2>
@@ -72,10 +75,11 @@ function App() {
           </div>
           <Cards/>
         </section>
-      </main>
+      </main> */}
 <Footer/>
    </div>
   )
 }
 
-export default App
+
+export default App;
