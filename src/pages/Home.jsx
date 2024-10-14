@@ -3,6 +3,7 @@
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import Main from '../components/Main';
+import Blog from './Blog';
 // import HeroSection from './components/HeroSection' 
 // import RecipeShare from './components/RecipeShare'
 function Home() {
@@ -16,6 +17,7 @@ function Home() {
             <Header />
             {/* <HeroSection/> */}
             <Main />
+            <Blog/>
             <Footer />
         </div>
     )
