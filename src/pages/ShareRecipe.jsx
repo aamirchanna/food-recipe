@@ -10,4 +10,4 @@ const ShareRecipe = () => {
   )
 }
 
-export default ShareRecipe
+export default ShareRecipe;
