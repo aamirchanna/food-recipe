@@ -1,22 +1,22 @@
-// import { useNavigate } from 'react-router-dom'
-
-// import Footer from '../components/Footer'
-// import Header from '../components/Header'
+import React from 'react';
+import Blog from './Blog';
 import Main from '../components/Main';
-// import HeroSection from './components/HeroSection' 
-// import RecipeShare from './components/RecipeShare'
+// Uncomment these if you need them
+// import Footer from '../components/Footer';
+// import Header from '../components/Header';
+// import HeroSection from './components/HeroSection';
 
 function Home() {
-  // const navigate = useNavigate()
-  // const goToAboutPage = () => navigate("about")
-
   return (
-    <div>
+    <>
+      {/* Uncomment these if you need them */}
       {/* <Header /> */}
-      {/* <HeroSection/> */}
+      {/* <HeroSection /> */}
+      
       <Main />
+      <Blog />
       {/* <Footer /> */}
-    </div>
+    </>
   );
 }
 
