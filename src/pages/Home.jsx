@@ -2,7 +2,8 @@
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Main from "../components/Home";
+// import Main from "../components/Home";
+import Main from "../components/Main";
 // import HeroSection from './components/HeroSection'
 // import RecipeShare from './components/RecipeShare'
 function Home() {
@@ -11,10 +12,10 @@ function Home() {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       {/* <HeroSection/> */}
       <Main />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
