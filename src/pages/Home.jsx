@@ -1,10 +1,6 @@
-import React from 'react';
 import Blog from './Blog';
 import Main from '../components/Main';
-// Uncomment these if you need them
-// import Footer from '../components/Footer';
-// import Header from '../components/Header';
-// import HeroSection from './components/HeroSection';
+import { Newslater } from '../components/Newslater';
 
 function Home() {
   return (
@@ -15,6 +11,7 @@ function Home() {
       
       <Main />
       <Blog />
+      <Newslater/>
       {/* <Footer /> */}
     </>
   );
