@@ -1,10 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import { createRoot } from 'react-dom/client'; // Updated import
+import App from './App';
 import './index.css'
+import { RecipesProvider } from './RecipesContext';
+// import { AuthProvider } from './context/AuthContext'; 
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+const container = document.getElementById('root'); 
+const root = createRoot(container); 
+
+root.render(
+  <RecipesProvider>
     <App />
-  </StrictMode>,
-)
+  </RecipesProvider>
+
+);
+

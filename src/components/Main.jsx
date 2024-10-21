@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
-import Cards from "./Cards"
-import React from 'react';
+import Button from "./Button";
 const Main = () => {
   return (
     <div>
@@ -10,7 +9,7 @@ const Main = () => {
             <h2 className="text-5xl font-bold mb-4">Your Daily Dish</h2>
             <h3 className="text-3xl font-bold text-red-500 mb-4">A Food Journey</h3>
             <p className="text-gray-600 mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <button className="px-6 py-3 text-white bg-red-500 rounded-full hover:bg-red-600">Sign Up</button>
+             <Button text={"Sign Up"}/>
           </div>
           <div className="w-1/2 relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-red-200 rounded-full -z-10"></div>
@@ -53,10 +52,7 @@ const Main = () => {
           <div className="w-1/2 pl-8">
             <h2 className="text-3xl font-bold mb-4">Share Your <span className="text-red-500">Recipes</span></h2>
             <p className="text-gray-600 mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <button className="px-6 py-3 text-white bg-red-500 rounded-full hover:bg-red-600 flex items-center">
-              Submit Recipe
-              
-            </button>
+           <Button text={"Share recipe"}/>
           </div>
         </section>
 
@@ -65,7 +61,7 @@ const Main = () => {
             <h2 className="text-3xl font-bold">Trending Recipe</h2>
             <Link to="./Recipe" className="text-red-500 hover:text-red-600">View more</Link>
           </div>
-          <Cards/>
+          
         </section>
       </main>
     </div>

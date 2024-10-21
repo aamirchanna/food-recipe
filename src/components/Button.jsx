@@ -1,10 +1,13 @@
 
 
-const Button = () => {
-  return (
-    <button className="px-6 py-3 text-white bg-red-500 rounded-full hover:bg-red-600">Sign Up</button>
 
+ const Button = ({text , color}) => {
+  return (
+    <div>
+      <button className= {`bg-red-500 hover:bg-red-400 p-2 m-1 text-white rounded-lg ` }  >
+        {text}
+      </button>
+    </div>
   )
 }
-
 export default Button

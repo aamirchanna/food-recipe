@@ -1,4 +1,5 @@
 import recipeImage from '../assets/recipe.jpeg'; // Update the path to your image
+import Button from './Button';
 
 const RecipeShare = () => {
   return (
@@ -35,9 +36,7 @@ const RecipeShare = () => {
                 rows="4"
               ></textarea>
             </div>
-            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg">
-              Share Recipe
-            </button>
+            <Button text={"Share Recipe"}/>
           </form>
         </div>
 

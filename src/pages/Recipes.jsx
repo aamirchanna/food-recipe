@@ -1,50 +1,120 @@
-import React from 'react';
-import recipeImage from "../assets/noodles.jpeg";
- // Adjust the path as needed
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const Recipes= () => {
-  return (
-    <section className="py-10 bg-gray-100">
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-        {/* Recipe Image */}
-        <div className="mb-6">
-          <img src={recipeImage} alt="Recipe" className="w-full h-auto rounded-md" />
-        </div>
+export default function Recipes() {
+  const [recipes, setRecipes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const categories = ['All', 'pizza', 'salad', 'snack', 'juice', 'antipasto', 'ice cream', 'lasagna', 'pudding', 'soup'];
 
-        {/* Recipe Name */}
-        <div className="mb-4">
-          <h2 className="text-2xl font-bold text-center text-gray-800">Delicious Spaghetti Bolognese</h2>
-        </div>
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
 
-        {/* Ingredients */}
-        <div className="mb-6">
-          <h3 className="text-xl font-semibold text-gray-700">Ingredients</h3>
-          <ul className="list-disc list-inside ml-4">
-            <li>400g Spaghetti</li>
-            <li>500g Ground Beef</li>
-            <li>1 Onion (chopped)</li>
-            <li>2 Garlic cloves (minced)</li>
-            <li>400g Tomato Sauce</li>
-            <li>Salt and Pepper</li>
-            <li>Olive Oil</li>
-          </ul>
-        </div>
+  const fetchRecipes = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/random?number=10&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
+      );
+      const data = await response.json();
 
-        {/* Instructions */}
-        <div>
-          <h3 className="text-xl font-semibold text-gray-700">Instructions</h3>
-          <ol className="list-decimal list-inside ml-4">
-            <li>Cook spaghetti according to package instructions.</li>
-            <li>In a large pan, heat olive oil and sauté onions and garlic.</li>
-            <li>Add ground beef, cook until browned.</li>
-            <li>Stir in tomato sauce, simmer for 10 minutes.</li>
-            <li>Season with salt and pepper to taste.</li>
-            <li>Serve sauce over spaghetti and enjoy!</li>
-          </ol>
-        </div>
-      </div>
-    </section>
+      const formattedRecipes = data.recipes.map((recipe) => ({
+        id: recipe.id,
+        title: recipe.title,
+        summary: cleanSummary(recipe.summary),
+        image: recipe.image || 'https://via.placeholder.com/300x200',
+        tags: recipe.dishTypes || [],
+        instructions: recipe.instructions || 'Instructions not available.', // Assuming instructions are available
+      }));
+
+      setRecipes(formattedRecipes);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+    setLoading(false);
+  };
+
+  const cleanSummary = (summary) => {
+    const cleanText = summary.replace(/<[^>]*>/g, '');
+    if (cleanText.length > 250) {
+      return cleanText.substring(0, 250).trimEnd() + '...';
+    }
+    return cleanText;
+  };
+
+  // Filter recipes based on the search term and selected category
+  const filteredRecipes = recipes.filter(recipe =>
+    recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedCategory === 'All' || (selectedCategory ? recipe.category === selectedCategory : true))
   );
-};
 
-export default Recipes;
+  return (
+    <div className="container mx-auto p-4">
+      {/* Categories */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {categories.map((category) => (
+          <button
+            key={category}
+            className={`px-4 py-2 rounded-full ${selectedCategory === category ? 'bg-red-600 text-white' : 'bg-red-500 text-white'} text-sm font-semibold`}
+            onClick={() => setSelectedCategory(selectedCategory === category ? '' : category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      {/* Search Bar */}
+      <div className="relative mb-6">
+        <input
+          type="text"
+          placeholder="Search recipes"
+          className="w-full p-2 pr-10 border rounded-md"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      {/* Loader */}
+      {loading ? (
+        <div className="flex justify-center items-center h-48">
+          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-red-500" role="status"></div>
+          <span className="ml-2">Loading recipes...</span>
+        </div>
+      ) : (
+        /* Recipes Grid */
+        <div className="grid grid-cols-1 md:grid-cols-2 mx-5 gap-6">
+          {filteredRecipes.length > 0 ? (
+            filteredRecipes.map((recipe) => (
+              <div key={recipe.id} className="border rounded-lg overflow-hidden shadow-md">
+                <img src={recipe.image} alt={recipe.title} className="h-[380px] w-full object-cover" />
+                <div className="p-4">
+                  <h2 className="text-xl font-semibold">{recipe.title}</h2>
+                  <p className="text-gray-600 mb-4">{recipe.summary}</p>
+
+                  {/* Tags Section */}
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {recipe.tags.map((tag, index) => (
+                      <button
+                        key={index}
+                        className="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold"
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Link to the recipe detail page */}
+                  <Link to={`/recipe/${recipe.id}`} className="text-red-500 font-semibold mt-2">VIEW RECIPE</Link>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No recipes found</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
