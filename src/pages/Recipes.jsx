@@ -16,7 +16,7 @@ export default function Recipes() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/random?number=10&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
+        `https://api.spoonacular.com/recipes/random?number=50&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
       );
       const data = await response.json();
 
@@ -47,7 +47,7 @@ export default function Recipes() {
   // Filter recipes based on the search term and selected category
   const filteredRecipes = recipes.filter(recipe =>
     recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (selectedCategory === 'All' || (selectedCategory ? recipe.category === selectedCategory : true))
+    (selectedCategory === 'All' || (selectedCategory ? recipe.tags.includes(selectedCategory) : true))
   );
 
   return (

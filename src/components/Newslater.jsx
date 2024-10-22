@@ -2,16 +2,18 @@ import Button from './Button'; // Adjust the import path as necessary
 
 export const Newslater = () => {
   return (
-    <div>
-      <div className="container flex flex-col m-6 p-3 bg-pink-100 justify-center  items-center">
-        <div className="text-3xl my-3">
-          Let`s Stay in Touch
-        </div>
-        <div>
-          Join our newsletter so that we can reach out to you with <span>our news and offers</span>
-        </div>
-        <div className="flex my-3">
-          <input type="text" placeholder="Enter your email" className="rounded-full p-3 w-[600px] my-2" />
+    <div className="flex justify-center items-center py-6">
+      <div className="container flex flex-col m-6 p-6 bg-pink-100 rounded-lg shadow-md">
+        <h2 className="text-3xl my-3 text-center">Let`s Stay in Touch</h2>
+        <p className="text-center mb-4">
+          Join our newsletter so that we can reach out to you with <span>our news and offers</span>.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center items-center">
+          <input 
+            type="text" 
+            placeholder="Enter your email" 
+            className="rounded-full p-3 w-full sm:w-80 my-2 sm:my-0 sm:mr-2"
+          />
           <Button text="Subscribe" color="" />
         </div>
       </div>

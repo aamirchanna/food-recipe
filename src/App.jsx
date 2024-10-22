@@ -12,6 +12,7 @@ import Signup from './pages/Signup';
 import NotFound from './components/NotFound';
 import AddBlog from './pages/AddBlog';
 import RecipeDetail from './components/RecipeDetail';
+import MyRecipe from './pages/MyRecipe';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
           <Route path="/sharerecipe" element={<ShareRecipe />} />
+          <Route path="/myrecipe" element={<MyRecipe />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/addblog" element={<AddBlog />} />
           <Route path="/contact" element={<Contact />} />

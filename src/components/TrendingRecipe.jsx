@@ -35,11 +35,11 @@ const Trending = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2 className="text-2xl font-semibold mb-5">Trending Recipes</h2>
 
       {loading ? (
-        <div className=" flex justify-center items-center mb-[10px] h-48">
+        <div className="flex justify-center items-center mb-10 h-48">
           <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-pink-500" role="status"></div>
           <span className="ml-2">Loading trending recipes...</span>
         </div>

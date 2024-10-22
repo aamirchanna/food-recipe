@@ -1,13 +1,12 @@
-
-
-
- const Button = ({text , color}) => {
+const Button = ({ text, onClick }) => {
   return (
-    <div>
-      <button className= {`bg-red-500 hover:bg-red-400 p-2 m-1 text-white rounded-lg ` }  >
-        {text}
-      </button>
-    </div>
-  )
-}
-export default Button
+    <button
+      className="px-4 py-2 bg-red-500 text-white rounded-lg"
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
+};
+
+export default Button;
