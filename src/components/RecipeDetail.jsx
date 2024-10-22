@@ -11,10 +11,21 @@ const RecipeDetail = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://api.spoonacular.com/recipes/${id}/information?apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
         );
         const data = await response.json();
-        setRecipe(data); // Set the fetched recipe details
+        if (data.meals) {
+          const meal = data.meals[0];
+          const formattedRecipe = {
+            title: meal.strMeal,
+            image: meal.strMealThumb,
+            summary: meal.strInstructions,
+            instructions: meal.strInstructions,
+          };
+          setRecipe(formattedRecipe); // Set the fetched recipe details
+        } else {
+          setRecipe(null);
+        }
       } catch (error) {
         console.error("Error fetching recipe detail:", error);
       }
@@ -37,7 +48,7 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div className="container mx-auto w-[900px] my-6  p-4">
+    <div className="container mx-auto w-[900px] my-6 p-4">
       <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
       <img src={recipe.image} alt={recipe.title} className="w-full h-72 object-cover mb-4" />
       

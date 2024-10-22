@@ -1,84 +1,103 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const Trending = () => {
-  const [trendingRecipes, setTrendingRecipes] = useState([]);
+export default function Recipes() {
+  const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchTrendingRecipes();
+    fetchRecipes();
   }, []);
 
-  const fetchTrendingRecipes = async () => {
+  const fetchRecipes = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/random?number=3&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=`
       );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
+      console.log('data==> ', data); // Log the data to see what is returned
 
-      const formattedRecipes = data.recipes.map((recipe) => ({
-        id: recipe.id,
-        title: recipe.title,
-        image: recipe.image,
-        rating: (Math.random() * 2 + 3).toFixed(1), // Simulate random ratings between 3.0 to 5.0
-        chef: {
-          name: "John Doe", // You can replace this with dynamic names if you have them
-          avatar: "https://th.bing.com/th/id/OIP.x7X2oAehk5M9IvGwO_K0PgHaHa?rs=1&pid=ImgDetMain" // Default avatar
-        }
-      }));
+      if (data.meals) {
+        const formattedRecipes = data.meals.map((meal) => ({
+          id: meal.idMeal,
+          title: meal.strMeal,
+          summary: cleanSummary(meal.strInstructions),
+          image: meal.strMealThumb || 'https://via.placeholder.com/300x200',
+          tags: meal.strTags ? meal.strTags.split(',') : [],
+          instructions: meal.strInstructions || 'Instructions not available.',
+        }));
 
-      setTrendingRecipes(formattedRecipes);
+        setRecipes(formattedRecipes);
+      } else {
+        setRecipes([]); // Set to empty array if no meals are returned
+      }
     } catch (error) {
-      console.error("Error fetching trending recipes:", error);
+      console.error("Error fetching recipes:", error);
     }
     setLoading(false);
   };
 
-  return (
-    <div className="flex flex-col items-center">
-      <h2 className="text-2xl font-semibold mb-5">Trending Recipes</h2>
+  const cleanSummary = (summary) => {
+    const cleanText = summary.replace(/<[^>]*>/g, '');
+    if (cleanText.length > 250) {
+      return cleanText.substring(0, 250).trimEnd() + '...';
+    }
+    return cleanText;
+  };
 
+  // Limit to 3 recipes
+  const filteredRecipes = recipes.slice(0, 3);
+
+  return (
+    <div className="container mx-auto p-4">
+      {/* Heading */}
+      <h1 className="text-2xl font-bold mb-4">Trending Recipes</h1>
+
+      {/* Loader */}
       {loading ? (
-        <div className="flex justify-center items-center mb-10 h-48">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-pink-500" role="status"></div>
-          <span className="ml-2">Loading trending recipes...</span>
+        <div className="flex justify-center items-center h-48">
+          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-red-500" role="status"></div>
+          <span className="ml-2">Loading recipes...</span>
         </div>
       ) : (
-        <div className="container mx-2 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {trendingRecipes.map((recipe) => (
-            <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <img 
-                src={recipe.image} 
-                alt={`Trending recipe ${recipe.title}`} 
-                width={300} 
-                height={200} 
-                className="w-full object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold mb-2">{recipe.title}</h3>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1">
-                    <span className="text-yellow-400">★</span>
-                    <span className="text-sm text-gray-600">{recipe.rating}</span>
+        /* Recipes Grid */
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {filteredRecipes.length > 0 ? (
+            filteredRecipes.map((recipe) => (
+              <div key={recipe.id} className="border rounded-lg overflow-hidden shadow-md">
+                <img src={recipe.image} alt={recipe.title} className="h-40 w-full object-cover" />
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold">{recipe.title}</h2>
+                  <p className="text-gray-600 mb-2">{recipe.summary}</p>
+
+                  {/* Tags Section */}
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {recipe.tags.map((tag, index) => (
+                      <button
+                        key={index}
+                        className="px-2 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold"
+                      >
+                        {tag}
+                      </button>
+                    ))}
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <img 
-                      src={recipe.chef.avatar} 
-                      alt="Chef avatar" 
-                      width={24} 
-                      height={24} 
-                      className="rounded-full"
-                    />
-                    <span className="text-sm text-gray-600">{recipe.chef.name}</span>
-                  </div>
+
+                  {/* Link to the recipe detail page */}
+                  <Link to={`/recipe/${recipe.id}`} className="text-red-500 font-semibold mt-2 block">VIEW RECIPE</Link>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No recipes found</p>
+          )}
         </div>
       )}
     </div>
   );
-};
-
-export default Trending;
+}

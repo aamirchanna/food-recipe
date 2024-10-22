@@ -10,8 +10,8 @@ function Home() {
    
       <Main />
       <FeaturedBlogs />
-      <Newslater/>
       <TrendingRecipe/>
+      <Newslater/>
       {/* <Footer /> */}
     </>
   );
