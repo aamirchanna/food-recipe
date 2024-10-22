@@ -16,17 +16,23 @@ export default function Recipes() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/random?number=50&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=`
       );
-      const data = await response.json();
 
-      const formattedRecipes = data.recipes.map((recipe) => ({
-        id: recipe.id,
-        title: recipe.title,
-        summary: cleanSummary(recipe.summary),
-        image: recipe.image || 'https://via.placeholder.com/300x200',
-        tags: recipe.dishTypes || [],
-        instructions: recipe.instructions || 'Instructions not available.', // Assuming instructions are available
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('data==> ', data);
+
+      const formattedRecipes = data.meals.map((meal) => ({
+        id: meal.idMeal,
+        title: meal.strMeal,
+        summary: cleanSummary(meal.strInstructions),
+        image: meal.strMealThumb || 'https://via.placeholder.com/300x200',
+        tags: meal.strTags ? meal.strTags.split(',') : [],
+        instructions: meal.strInstructions || 'Instructions not available.',
       }));
 
       setRecipes(formattedRecipes);
