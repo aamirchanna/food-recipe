@@ -16,7 +16,6 @@ export default function Navbar() {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser); // Set the user state
     });
-
     return () => unsubscribe(); // Clean up subscription on unmount
   }, []);
 
@@ -42,8 +41,12 @@ export default function Navbar() {
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link to="/" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Home</Link>
                 <Link to="/recipes" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Recipe</Link>
-                <Link to="/sharerecipe" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Add Recipe</Link>
-                <Link to="/myrecipe" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">My Recipe</Link>
+                {user && (
+                  <>
+                    <Link to="/sharerecipe" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Add Recipe</Link>
+                    <Link to="/myrecipe" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">My Recipe</Link>
+                  </>
+                )}
                 <Link to="/blog" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Blog</Link>
                 <Link to="/about" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">About us</Link>
               </div>
@@ -90,14 +93,15 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/" className="text-gray-600 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Home</Link>
             <Link to="/recipes" className="text-gray-600 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Recipe</Link>
-            <Link to="/sharerecipe" className="text-gray-600 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Add Recipe</Link>
+            {user && (
+              <Link to="/sharerecipe" className="text-gray-600 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Add Recipe</Link>
+            )}
             <Link to="/blog" className="text-gray-600 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Blog</Link>
             <Link to="/about" className="text-gray-600 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">About us</Link>
           </div>

@@ -1,7 +1,19 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import { auth } from "../firebase"; // Ensure this is your Firebase config
+import { onAuthStateChanged } from "firebase/auth";
 
 const Main = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); // Set the user state
+    });
+    return () => unsubscribe(); // Clean up subscription on unmount
+  }, []);
+
   return (
     <div>
       <main className="container mx-auto px-6 py-8">
@@ -13,10 +25,17 @@ const Main = () => {
             <p className="text-gray-600 mb-6">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
             </p>
-            <Button text={"Sign Up"} />
+            {!user ? (
+              <Link to="/signup">
+                <Button text="Sign Up" />
+              </Link>
+            ) : (
+              <Link to="/recipes">
+                <Button text="View Recipes" />
+              </Link>
+            )}
           </div>
           <div className="w-full md:w-1/2 relative">
-            {/* <div className="absolute top-0 right-0 w-64 h-64 bg-red-200 rounded-full -z-10 hidden md:block"></div> */}
             <img
               src="https://www.allrecipes.com/thmb/MH-78wuLP6XOj4dqLWVd8UrmK4k=/2000x666/filters:no_upscale():max_bytes(150000):strip_icc():focal(1999x0:2001x2):format(webp)/8707673-country-ham-biscuits-3x1-13a7611823f34857b2a1a56a877ad42f.jpg"
               alt="Delicious dish"
@@ -41,7 +60,6 @@ const Main = () => {
             </div>
           </div>
         </section>
-
         {/* Second Section */}
         <section className="flex flex-col md:flex-row items-center justify-between mb-16">
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
@@ -60,13 +78,18 @@ const Main = () => {
             <p className="text-gray-600 mb-6">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
             </p>
-            <Link to="/sharerecipe">
-              <Button text={"Share recipe"} />
-            </Link>
+            {user ? (
+              <Link to="/sharerecipe">
+                <Button text="Share Recipe" />
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button text="Log In" />
+              </Link>
+            )}
           </div>
         </section>
-
-       </main>
+      </main>
     </div>
   );
 };

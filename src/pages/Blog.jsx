@@ -18,7 +18,7 @@ export default function Blog() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/random?number=3&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
+        `https://api.spoonacular.com/recipes/random?number=20&apiKey=2b460e0e2c6d42cb9bfbbcdb077fbbdf`
       );
 
       if (!response.ok) {
